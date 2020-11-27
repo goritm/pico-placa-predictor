@@ -80,7 +80,7 @@ const PicoPlaca = () => {
 
   return (
     <section>
-      <form onSubmit={handleSubmit}>
+      <form className="form-container" onSubmit={handleSubmit}>
         <h3>Pico & Placa Predictor</h3>
         {errorMsg && (
           <p role="alert" style={{ color: "red" }}>
@@ -93,6 +93,7 @@ const PicoPlaca = () => {
           } DRIVE!`}</h4>
         )}
         <input
+          className="licenseInput"
           type="text"
           placeholder="ABC1234"
           value={licensePlate.toUpperCase()}
@@ -107,7 +108,9 @@ const PicoPlaca = () => {
           value={dateTime}
           onChange={(dateTime) => setDateTime(dateTime)}
         />
-        <button type="submit">check</button>
+        <button className="btn" type="submit">
+          check
+        </button>
       </form>
     </section>
   );

@@ -1,13 +1,121 @@
-body {
+/* variables */
+:root {
+  --clr-grey-1: hsl(209, 61%, 16%);
+  --clr-grey-2: hsl(211, 39%, 23%);
+  --clr-grey-3: hsl(209, 34%, 30%);
+  --clr-grey-4: hsl(209, 28%, 39%);
+  --clr-grey-5: hsl(210, 22%, 49%);
+  --clr-grey-6: hsl(209, 23%, 60%);
+  --clr-grey-7: hsl(211, 27%, 70%);
+  --clr-grey-8: hsl(210, 31%, 80%);
+  --clr-grey-9: hsl(212, 33%, 89%);
+  --clr-grey-10: hsl(210, 36%, 96%);
+  --clr-white: #fff;
+  --clr-black: #222;
+  --transition: all 0.3s linear;
+  --spacing: 0.1rem;
+  --radius: 0.75rem;
+  --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* general */
+*,
+::after,
+::before {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--clr-grey-10);
+  color: var(--clr-grey-1);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+section {
+  width: 90vw;
+  margin: 0 auto;
+  margin-top: 8rem;
+  padding: 2rem;
+  max-width: 35rem;
+  background: var(--clr-white);
+  border-radius: var(--radius);
+  box-shadow: var(--light-shadow);
+  transition: var(--transition);
+}
+section:hover {
+  box-shadow: var(--dark-shadow);
+}
+
+h3,
+h4 {
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+  letter-spacing: var(--spacing);
+}
+h3 {
+  font-size: 1.25rem;
+}
+h4 {
+  font-size: 0.875rem;
+}
+
+@media screen and (min-width: 800px) {
+  body {
+    font-size: 1rem;
+  }
+  h3 {
+    font-size: 1.75rem;
+  }
+  h4 {
+    font-size: 1rem;
+  }
+  h3,
+  h4 {
+    line-height: 1;
+  }
+}
+
+/* classNames */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: center;
+}
+
+.licenseInput {
+  padding: 0.5rem;
+  padding-left: 1rem;
+  font-size: 1rem;
+  margin: 1rem 0;
+  border-color: transparent;
+  border-radius: var(--radius);
+  color: var(--clr-grey-5);
+  background: var(--clr-grey-10);
+}
+
+.btn {
+  padding: 0.375rem 0.75rem;
+  margin-top: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--clr-black);
+  border: 2px solid var(--clr-black);
+  border-radius: var(--radius);
+  letter-spacing: var(--spacing);
+  transition: var(--transition);
+}
+.btn:hover {
+  color: var(--clr-white);
+  background: var(--clr-black);
 }
