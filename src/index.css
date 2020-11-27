@@ -63,10 +63,10 @@ h3 {
   font-size: 1.25rem;
 }
 h4 {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 992px) {
   body {
     font-size: 1rem;
   }
@@ -74,7 +74,7 @@ h4 {
     font-size: 1.75rem;
   }
   h4 {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
   h3,
   h4 {

@@ -26,7 +26,7 @@ const reducer = (state, action) => {
     case "LICENSE":
       return { ...state, licensePlate: action.payload, isSubmitted: false };
     case "DATETIME":
-      return { ...state, dateTime: action.payload };
+      return { ...state, dateTime: action.payload, isSubmitted: false };
     case "ERROR":
       return { ...state, errorMsg: action.payload };
     default:
@@ -97,9 +97,9 @@ const PicoPlaca = () => {
           </p>
         )}
         {isSubmitted && (
-          <h4>{`LICENSE PLATE NUMBER ${licensePlate} CAN${
+          <h4>{`NUMBER PLATE ${licensePlate} CAN${
             !isAllowed ? "NOT" : ""
-          } DRIVE!`}</h4>
+          } DRIVE AT ${dateTime.format("MM/DD, HH:mm")}`}</h4>
         )}
         <input
           className="licenseInput"
