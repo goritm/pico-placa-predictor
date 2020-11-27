@@ -6,12 +6,39 @@ import {
   calculateMinutesSinceMidnight,
 } from "./utils";
 
+const initialState = {
+  licensePlate: "",
+  errorMsg: "",
+  dateTime: null,
+  isAllowed: false,
+  isSubmitted: false,
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SUBMIT":
+      return {
+        ...state,
+        errorMsg: "",
+        isAllowed: action.payload,
+        isSubmitted: true,
+      };
+    case "LICENSE":
+      return { ...state, licensePlate: action.payload, isSubmitted: false };
+    case "DATETIME":
+      return { ...state, dateTime: action.payload };
+    case "ERROR":
+      return { ...state, errorMsg: action.payload };
+    default:
+      return { ...state, errorMsg: "this should not happen" };
+  }
+};
+
 const PicoPlaca = () => {
-  const [licensePlate, setLicensePlate] = React.useState("");
-  const [errorMsg, setErrorMsg] = React.useState("");
-  const [dateTime, setDateTime] = React.useState(null);
-  const [isAllowed, setIsAllowed] = React.useState(false);
-  const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [
+    { licensePlate, dateTime, isAllowed, isSubmitted, errorMsg },
+    dispatch,
+  ] = React.useReducer(reducer, initialState);
 
   const getRestrictedHours = (dateTime) => {
     const hoursOfTheDay = dateTime.hour();
@@ -39,20 +66,24 @@ const PicoPlaca = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!licensePlate) {
-      setErrorMsg("Enter a license plate number");
+      dispatch({ type: "ERROR", payload: "Enter a license plate number" });
     } else if (
       licensePlate.length !== 7 ||
       licensePlate.substr(0, 3).match(/\d/) ||
       isNaN(licensePlate.substr(3, 4))
     ) {
-      setErrorMsg("Enter a valid license plate number e.g. ABC1234");
+      dispatch({
+        type: "ERROR",
+        payload: "Enter a valid license plate number e.g. ABC1234",
+      });
     } else if (!dateTime) {
-      setErrorMsg("Select a date and time");
+      dispatch({ type: "ERROR", payload: "Select a date and time" });
     } else {
       const lastDigit = parseInt(licensePlate.slice(-1));
-      setErrorMsg("");
-      setIsSubmitted(true);
-      setIsAllowed(licensePlateCanDrive(lastDigit, dateTime));
+      dispatch({
+        type: "SUBMIT",
+        payload: licensePlateCanDrive(lastDigit, dateTime),
+      });
     }
   };
 
@@ -77,17 +108,18 @@ const PicoPlaca = () => {
           value={licensePlate.toUpperCase()}
           onChange={({ target: { value } }) => {
             if (value.length > 7) return;
-            setIsSubmitted(false);
-            return setLicensePlate(value);
+            return dispatch({ type: "LICENSE", payload: value });
           }}
         />
         <Datetime
           input={false}
           value={dateTime}
-          onChange={(dateTime) => setDateTime(dateTime)}
+          onChange={(dateTime) =>
+            dispatch({ type: "DATETIME", payload: dateTime })
+          }
         />
         <button className="btn" type="submit">
-          check
+          check if you can drive
         </button>
       </form>
     </section>
