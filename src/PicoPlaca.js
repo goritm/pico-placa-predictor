@@ -1,11 +1,7 @@
 import * as React from "react";
 import Datetime from "react-datetime";
-import {
-  licensePlateCanDrive,
-  validateLicenseAndDate,
-  reducer,
-  initialState,
-} from "./utils";
+import { submitValues, reducer, initialState } from "./utils";
+import Input from "./Input";
 
 const PicoPlaca = () => {
   const [
@@ -15,13 +11,7 @@ const PicoPlaca = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (validateLicenseAndDate(licensePlate, dateTime, dispatch)) {
-      const lastDigit = parseInt(licensePlate.slice(-1));
-      dispatch({
-        type: "SUBMIT",
-        payload: licensePlateCanDrive(lastDigit, dateTime),
-      });
-    }
+    submitValues(licensePlate, dateTime, dispatch);
   };
 
   return (
@@ -38,16 +28,7 @@ const PicoPlaca = () => {
             !isAllowed ? "NOT" : ""
           } DRIVE AT ${dateTime.format("MM/DD, HH:mm")}`}</h4>
         )}
-        <input
-          className="licenseInput"
-          type="text"
-          placeholder="ABC1234"
-          value={licensePlate.toUpperCase()}
-          onChange={({ target: { value } }) => {
-            if (value.length > 7) return;
-            return dispatch({ type: "LICENSE", payload: value });
-          }}
-        />
+        <Input license={licensePlate} dispatch={dispatch} />
         <Datetime
           input={false}
           value={dateTime}

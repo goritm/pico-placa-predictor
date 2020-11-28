@@ -47,7 +47,8 @@ const licensePlateCanDrive = (lastDigit, dateTime) => {
   return true;
 };
 
-const validateLicenseAndDate = (licensePlate, dateTime, dispatch) => {
+const submitValues = (licensePlate, dateTime, dispatch) => {
+  // values validation
   if (!licensePlate) {
     dispatch({ type: "ERROR", payload: "Enter a license plate number" });
   } else if (
@@ -62,7 +63,12 @@ const validateLicenseAndDate = (licensePlate, dateTime, dispatch) => {
   } else if (!dateTime) {
     dispatch({ type: "ERROR", payload: "Select a date and time" });
   } else {
-    return true;
+    // values are validated, so we can submit them
+    const lastDigit = parseInt(licensePlate.slice(-1));
+    dispatch({
+      type: "SUBMIT",
+      payload: licensePlateCanDrive(lastDigit, dateTime),
+    });
   }
 };
 
@@ -95,4 +101,4 @@ const initialState = {
   isSubmitted: false,
 };
 
-export { licensePlateCanDrive, validateLicenseAndDate, reducer, initialState };
+export { submitValues, reducer, initialState };
