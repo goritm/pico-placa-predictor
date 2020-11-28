@@ -18,16 +18,6 @@ const PicoPlaca = () => {
     <section>
       <form className="form-container" onSubmit={handleSubmit}>
         <h3>Pico & Placa Predictor</h3>
-        {errorMsg && (
-          <p role="alert" style={{ color: "red" }}>
-            {errorMsg}
-          </p>
-        )}
-        {isSubmitted && (
-          <h4>{`NUMBER PLATE ${licensePlate} CAN${
-            !isAllowed ? "NOT" : ""
-          } DRIVE AT ${dateTime.format("MM/DD, HH:mm")}`}</h4>
-        )}
         <Input license={licensePlate} dispatch={dispatch} />
         <Datetime
           input={false}
@@ -39,6 +29,18 @@ const PicoPlaca = () => {
         <button className="btn" type="submit">
           check if you can drive
         </button>
+        {errorMsg && (
+          <p role="alert" style={{ color: "red" }}>
+            {errorMsg}
+          </p>
+        )}
+        {isSubmitted && (
+          <h4>
+            LICENSE PLATE NUMBER {licensePlate}{" "}
+            <span className="result">CAN{!isAllowed && "NOT"}</span> DRIVE
+            {/* AT {dateTime.format("MM/DD, HH:mm")} */}
+          </h4>
+        )}
       </form>
     </section>
   );
